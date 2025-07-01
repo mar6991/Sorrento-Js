@@ -71,7 +71,7 @@
     "descripcion": "Traducción certificada de sentencias de divorcio o adopción.",
     "precio": "Consultar",
     "imagen": "resources/papers.jpg"
-    },
+    }
 
 ]
 

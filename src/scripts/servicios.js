@@ -1,4 +1,4 @@
-//estructura de servicios
+
 [
 
     {
@@ -75,7 +75,6 @@
 
 ]
 
-//agregar servicios
 function adjustQty(button, delta) {
     const container = button.closest(".quantity-controls");
     const quantityEl = container.querySelector(".quantity");
@@ -87,7 +86,7 @@ function adjustQty(button, delta) {
     quantityEl.textContent = quantity;
 }
 
-//agregar dependiendo de la categoria del servicio
+
 const categoriaActual = "carpetas";
 
 fetch("servicios.json")

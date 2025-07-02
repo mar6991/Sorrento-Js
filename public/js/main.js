@@ -78,17 +78,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function logout() {
     sessionStorage.removeItem("loggedIn");
-    window.location.href = "../public/logIn.html";
+    window.location.href = "logIn.html";
 }
 
 //navegar por paginas
 const navPages = [
-    { title: "Inicio", href: "../public/index.html" },
-    { title: "Carpetas", href: "../public/carpetas.html" },
-    { title: "Inscripciones", href: "../public/inscripcion.html" },
-    { title: "Traducciones", href: "../public/traducciones.html" },
-    { title: "Contacto", href: "../public/contact.html" },
-    { title: "Carrito", href: "../public/carrito.html" }
+    { title: "Inicio", href: "index.html" },
+    { title: "Carpetas", href: "carpetas.html" },
+    { title: "Inscripciones", href: "inscripcion.html" },
+    { title: "Traducciones", href: "traducciones.html" },
+    { title: "Contacto", href: "contact.html" },
+    { title: "Carrito", href: "carrito.html" }
 ];
 
 function createNavbar() {
@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", createNavbar);
         authLi.querySelector("#auth-link").addEventListener("click", e => {
         e.preventDefault();
         sessionStorage.removeItem("loggedIn");
-        window.location.href = "../public/logIn.html";
+        window.location.href = "logIn.html";
     });
     } else {
         authLi.innerHTML = `

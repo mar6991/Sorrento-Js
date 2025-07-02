@@ -18,8 +18,10 @@
 //verificar si está logueado
 
 document.addEventListener("DOMContentLoaded", function () {
-    const authItem = document.getElementById("auth-item");
+
     const authLink = document.getElementById("auth-link");
+
+    if(!authLink) return;
 
     const isLoggedIn = sessionStorage.getItem("loggedIn") === "true";
 
@@ -41,12 +43,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function() {
 
+    let loginForm;
+
     if (window.location.pathname.includes("/logIn.html")) {
         const loginForm = document.querySelector("form.needs-validation");
     }
 
     if (loginForm) {
-
     loginForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -83,12 +86,12 @@ function logout() {
 
 //navegar por paginas
 const navPages = [
-    { title: "Inicio", href: "index.html" },
-    { title: "Carpetas", href: "carpetas.html" },
-    { title: "Inscripciones", href: "inscripcion.html" },
-    { title: "Traducciones", href: "traducciones.html" },
-    { title: "Contacto", href: "contact.html" },
-    { title: "Carrito", href: "carrito.html" }
+    { title: "Inicio", href: "/index.html" },
+    { title: "Carpetas", href: "/carpetas.html" },
+    { title: "Inscripciones", href: "/inscripcion.html" },
+    { title: "Traducciones", href: "/traducciones.html" },
+    { title: "Contacto", href: "/contact.html" },
+    { title: "Carrito", href: "/carrito.html" }
 ];
 
 function createNavbar() {
@@ -109,8 +112,6 @@ function createNavbar() {
 document.body.prepend(navbar);
 
 const ul = document.getElementById("navbar-links");
-
-document.addEventListener("DOMContentLoaded", createNavbar);
 
   // Añadir elementos del menú
     navPages.forEach(page => {
@@ -135,7 +136,7 @@ document.addEventListener("DOMContentLoaded", createNavbar);
         authLi.querySelector("#auth-link").addEventListener("click", e => {
         e.preventDefault();
         sessionStorage.removeItem("/loggedIn");
-        window.location.href = "logIn.html";
+        window.location.href = "/logIn.html";
     });
     } else {
         authLi.innerHTML = `

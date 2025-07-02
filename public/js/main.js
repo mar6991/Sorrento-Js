@@ -29,11 +29,11 @@ document.addEventListener("DOMContentLoaded", function () {
         authLink.onclick = function (e) {
             e.preventDefault();
             sessionStorage.removeItem("loggedIn");
-            window.location.href = "logIn.html";
+            window.location.href = "/logIn.html";
         };
     } else {
         authLink.innerHTML = '<i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión';
-        authLink.href = "logIn.html";
+        authLink.href = "/logIn.html";
     }
 });
 
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    if (window.location.pathname.includes("logIn.html")) {
+    if (window.location.pathname.includes("/logIn.html")) {
         const loginForm = document.querySelector("form.needs-validation");
     }
 
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function logout() {
     sessionStorage.removeItem("loggedIn");
-    window.location.href = "logIn.html";
+    window.location.href = "/logIn.html";
 }
 
 //navegar por paginas
@@ -134,12 +134,12 @@ document.addEventListener("DOMContentLoaded", createNavbar);
         </a>`;
         authLi.querySelector("#auth-link").addEventListener("click", e => {
         e.preventDefault();
-        sessionStorage.removeItem("loggedIn");
+        sessionStorage.removeItem("/loggedIn");
         window.location.href = "logIn.html";
     });
     } else {
         authLi.innerHTML = `
-        <a class="nav-link" href="logIn.html" id="auth-link">
+        <a class="nav-link" href="/logIn.html" id="auth-link">
         <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
         </a>`;
     }

@@ -135,7 +135,7 @@ const ul = document.getElementById("navbar-links");
         </a>`;
         authLi.querySelector("#auth-link").addEventListener("click", e => {
         e.preventDefault();
-        sessionStorage.removeItem("/loggedIn");
+        sessionStorage.removeItem("loggedIn");
         window.location.href = "/logIn.html";
     });
     } else {

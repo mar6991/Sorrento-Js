@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         authLink.onclick = function (e) {
             e.preventDefault();
             sessionStorage.removeItem("loggedIn");
-            window.location.href = "../public/logIn.html";
+            window.location.href = "logIn.html";
         };
     } else {
         authLink.innerHTML = '<i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión';
@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", createNavbar);
     });
     } else {
         authLi.innerHTML = `
-        <a class="nav-link" href="../public/logIn.html" id="auth-link">
+        <a class="nav-link" href="logIn.html" id="auth-link">
         <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
         </a>`;
     }

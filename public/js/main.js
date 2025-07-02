@@ -1,27 +1,25 @@
+// main.js corregido y optimizado
 (() => {
-    'use strict'
+    'use strict';
 
-    const forms = document.querySelectorAll('.needs-validation')
+    const forms = document.querySelectorAll('.needs-validation');
 
     Array.from(forms).forEach(form => {
-    form.addEventListener('submit', event => {
-        if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-    }
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+})();
 
-    form.classList.add('was-validated')
-    }, false)
-})
-})()
-
-//verificar si está logueado
-
+// Verificar si está logueado y modificar enlace de sesión
 document.addEventListener("DOMContentLoaded", function () {
-
     const authLink = document.getElementById("auth-link");
 
-    if(!authLink) return;
+    if (!authLink) return;
 
     const isLoggedIn = sessionStorage.getItem("loggedIn") === "true";
 
@@ -39,52 +37,51 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-//redirigir a Home
-
+// Redirigir a Home luego de login exitoso
 document.addEventListener("DOMContentLoaded", function() {
-
     let loginForm;
 
     if (window.location.pathname.includes("/logIn.html")) {
-        const loginForm = document.querySelector("form.needs-validation");
+        loginForm = document.querySelector("form.needs-validation");
     }
 
     if (loginForm) {
-    loginForm.addEventListener("submit", function(event) {
-    event.preventDefault();
+        loginForm.addEventListener("submit", function(event) {
+            event.preventDefault();
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (email === "" || password === "") {
-        alert("Por favor complete ambos campos.");
-        return;
+            if (email === "" || password === "") {
+                alert("Por favor complete ambos campos.");
+                return;
+            }
+
+            if (!emailPattern.test(email)) {
+                alert("Ingrese un correo electrónico válido.");
+                return;
+            }
+
+            if (password.length < 6) {
+                alert("La contraseña debe tener al menos 6 caracteres.");
+                return;
+            }
+
+            sessionStorage.setItem("loggedIn", "true");
+
+            const redirectTo = sessionStorage.getItem("redirectAfterLogin") || "/index.html";
+            window.location.href = redirectTo;
+        });
     }
-
-    if (!emailPattern.test(email)) {
-        alert("Ingrese un correo electrónico válido.");
-        return;
-    }
-
-    if (password.length < 6) {
-        alert("La contraseña debe tener al menos 6 caracteres.");
-        return;
-    }
-
-    sessionStorage.setItem("loggedIn", "true");
-
-    const redirectTo = sessionStorage.getItem("redirectAfterLogin") || "/index.html";
-    window.location.href = redirectTo;
-});}
-    });
+});
 
 function logout() {
     sessionStorage.removeItem("loggedIn");
     window.location.href = "/logIn.html";
 }
 
-//navegar por paginas
+// Navegación
 const navPages = [
     { title: "Inicio", href: "/index.html" },
     { title: "Carpetas", href: "/carpetas.html" },
@@ -100,28 +97,26 @@ function createNavbar() {
 
     navbar.innerHTML = `
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">Sorrento</a>
+            <a class="navbar-brand fw-bold" href="/index.html">Sorrento</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto" id="navbar-links"></ul>
             </div>
         </div>`;
 
-document.body.prepend(navbar);
+    document.body.prepend(navbar);
 
-const ul = document.getElementById("navbar-links");
+    const ul = document.getElementById("navbar-links");
 
-  // Añadir elementos del menú
     navPages.forEach(page => {
-    const li = document.createElement("li");
-    li.className = "nav-item";
-    li.innerHTML = `<a class="nav-link" href="${page.href}">${page.title}</a>`;
-    ul.appendChild(li);
+        const li = document.createElement("li");
+        li.className = "nav-item";
+        li.innerHTML = `<a class="nav-link" href="${page.href}">${page.title}</a>`;
+        ul.appendChild(li);
     });
 
-  // link del auth
     const authLi = document.createElement("li");
     authLi.className = "nav-item";
     authLi.id = "auth-item";
@@ -130,19 +125,19 @@ const ul = document.getElementById("navbar-links");
 
     if (isLoggedIn) {
         authLi.innerHTML = `
-        <a class="nav-link" href="#" id="auth-link">
-        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-        </a>`;
+            <a class="nav-link" href="#" id="auth-link">
+                <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+            </a>`;
         authLi.querySelector("#auth-link").addEventListener("click", e => {
-        e.preventDefault();
-        sessionStorage.removeItem("loggedIn");
-        window.location.href = "/logIn.html";
-    });
+            e.preventDefault();
+            sessionStorage.removeItem("loggedIn");
+            window.location.href = "/logIn.html";
+        });
     } else {
         authLi.innerHTML = `
-        <a class="nav-link" href="/logIn.html" id="auth-link">
-        <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
-        </a>`;
+            <a class="nav-link" href="/logIn.html" id="auth-link">
+                <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+            </a>`;
     }
 
     ul.appendChild(authLi);
@@ -150,18 +145,16 @@ const ul = document.getElementById("navbar-links");
 
 document.addEventListener("DOMContentLoaded", createNavbar);
 
-//agregar el carrito en el session storage
-
-function addToCart(servicioId, titulo, precio){
-    let cart =JSON.parse(localStorage.getItem("cart")) || [];
+// Función para agregar al carrito
+function addToCart(servicioId, titulo, precio) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     const existingItem = cart.find(item => item.id === servicioId);
 
     if (existingItem) {
         existingItem.cantidad += 1;
-        
-    } else{
-        cart.push({ id: servicioId, titulo, precio, cantidad:1});
+    } else {
+        cart.push({ id: servicioId, titulo, precio, cantidad: 1 });
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));

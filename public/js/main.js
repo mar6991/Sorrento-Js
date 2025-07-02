@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     sessionStorage.setItem("loggedIn", "true");
 
-    const redirectTo = sessionStorage.getItem("redirectAfterLogin") || "index.html";
+    const redirectTo = sessionStorage.getItem("redirectAfterLogin") || "/index.html";
     window.location.href = redirectTo;
 });}
     });

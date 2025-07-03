@@ -166,14 +166,17 @@ function addToCart(servicioId, titulo, precio, cantidad = 1) {
 }
 
 document.getElementById('contactForm').addEventListener('submit', function(e) {
-  e.preventDefault();
+    e.preventDefault();
   
-  if (this.checkValidity()) {
-  
-    setTimeout(() => {
-      window.location.href = '/index.html';
-    }, 2000);
-  }
-  
-  this.classList.add('was-validated');
+    if (this.checkValidity()) {
+        this.style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+    
+        setTimeout(() => {
+            this.style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+        }, 5000);
+    }
+
+    this.classList.add('was-validated');
 });

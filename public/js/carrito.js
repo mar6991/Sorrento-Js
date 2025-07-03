@@ -11,18 +11,18 @@ function renderCart() {
     const table = document.createElement("table");
     table.className = "table table-bordered table-hover";
 
-    // Safely build rows
     const rows = cart.map((item, index) => {
-        try {
-            // Ensure all required fields exist
-            const titulo = item.titulo || "Servicio desconocido";
-            const precio = typeof item.precio === "number" ? item.precio : 
-                        (item.precio === "Consultar" ? 0 : parseFloat(item.precio) || 0);
-            const cantidad = item.cantidad || 0;
-            const subtotal = precio * cantidad;
-            total += subtotal;
+        // Clean template literals if they exist
+        const titulo = item.titulo.startsWith('${') ? "Servicio desconocido" : item.titulo;
+        const precio = typeof item.precio === 'string' && item.precio.startsWith('${') 
+            ? "Consultar" 
+            : item.precio;
+        
+        const precioNum = typeof precio === 'number' ? precio : 0;
+        const subtotal = precioNum * item.cantidad;
+        total += subtotal;
 
-            return `
+        return `
                 <tr>
                     <td>${titulo}</td>
                     <td>${typeof item.precio === "number" ? "ARS " + item.precio.toLocaleString() : item.precio}</td>
@@ -35,10 +35,7 @@ function renderCart() {
                     </td>
                 </tr>
             `;
-        } catch (error) {
-            console.error("Error rendering cart item:", item, error);
-            return "";
-        }
+        
     }).join("");
 
     table.innerHTML = `

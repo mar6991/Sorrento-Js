@@ -149,14 +149,22 @@ document.addEventListener("DOMContentLoaded", createNavbar);
 function addToCart(servicioId, titulo, precio) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+    const cleanTitulo = titulo.startsWith('${') ? "Servicio desconocido" : titulo;
+    const cleanPrecio = typeof precio === 'string' && precio.startsWith('${') 
+        ? "Consultar" 
+        : precio;
+
     const existingItem = cart.find(item => item.id === servicioId);
 
     if (existingItem) {
         existingItem.cantidad += 1;
     } else {
-        cart.push({ id: servicioId, titulo, precio, cantidad: 1 });
+        cart.push({ id: servicioId,
+            titulo: cleanTitulo,
+            precio: cleanPrecio,
+            cantidad: 1 });
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert("Servicio agregado al carrito.");
+    updateCartCounter();
 }

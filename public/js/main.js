@@ -111,6 +111,14 @@ function createNavbar() {
 
     const ul = document.getElementById("navbar-links");
 
+    const cartLi = document.createElement("li");
+    cartLi.className = "nav-item";
+    cartLi.innerHTML = `
+        <a class="nav-link" href="/carrito.html">
+            <i class="bi bi-cart"></i> Carrito
+        </a>`;
+    ul.appendChild(cartLi);
+
     navPages.forEach(page => {
         const li = document.createElement("li");
         li.className = "nav-item";
@@ -168,8 +176,13 @@ function addToCart(servicioId, titulo, precio, cantidad = 1) {
 function updateCartCounter(){
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const cartCounter = document.getElementById("cartCounter");
-    if (cartCounter) cartCounter.textContent = cart.length;
+    if (cartCounter) {
+        cartCounter.textContent = cart.reduce((total, item) => total + (item.cantidad || 0), 0);
+    }
 }
+
+
+//validar form 
 
 const contactForm = document.getElementById('contactForm');
 

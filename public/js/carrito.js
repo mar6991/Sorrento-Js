@@ -71,11 +71,13 @@ function renderCart() {
             cart.splice(index, 1);
             localStorage.setItem("cart", JSON.stringify(cart));
             renderCart();
+            updateCartCounter()
         }
 
         function vaciarCarrito() {
             localStorage.removeItem("cart");
             renderCart();
+            updateCartCounter()
         }
 
         function confirmarCompra() {

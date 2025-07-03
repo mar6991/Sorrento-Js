@@ -87,7 +87,7 @@ document.getElementById("contact-form").addEventListener("submit", function(even
     event.preventDefault();
 
     if (this.checkValidity()) {
-
+        
         setTimeout(() => {
         alert("Gracias por contactarnos.");
         window.location.href = "/index.html";

@@ -156,8 +156,8 @@ function addToCart(servicioId, titulo, precio, cantidad = 1) {
         existingItem.cantidad += cantidad;
     } else {
         cart.push({ id: servicioId,
-            titulo: cleanTitulo,
-            precio: cleanPrecio,
+            titulo: titulo,
+            precio: precio,
             cantidad: cantidad });
     }
 

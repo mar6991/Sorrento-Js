@@ -30,7 +30,7 @@ function renderCart() {
                 <tr>
                     <td>${titulo}</td>
                     <td>${typeof item.precio === "number" ? "ARS " + item.precio.toLocaleString() : item.precio}</td>
-                    <td>${cantidad}</td>
+                    <td>${item.cantidad}</td>
                     <td>${precio ? "ARS " + subtotal.toLocaleString() : "-"}</td>
                     <td>
                         <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">

@@ -1,133 +1,127 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const pageId = document.body.id;
+    const categoriaActual = pageId.split('-')[1];
 
-[
-
-    {
-    "id": "carpeta1",
-    "categoria": "carpetas",
-    "titulo": "Armado de árbol genealógico",
-    "descripcion": "Búsqueda desde la persona interesada hasta el italiano.",
-    "precio": 45000,
-    "imagen": "resources/papers.jpg" 
-    },
-
-    {
-    "id": "carpeta2",
-    "categoria": "carpetas",
-    "titulo": "Pedido de actas",
-    "descripcion": "Solicitud de las actas de nacimiento, matrimonio y defunción legalizadas.",
-    "precio": "Consultar",
-    "imagen": "resources/papers.jpg" 
-    },
-
-    {
-    "id": "carpeta3",
-    "categoria": "carpetas",
-    "titulo": "Apostillado",
-    "descripcion": "Apostille de la Haya",
-    "precio": 50000,
-    "imagen": "resources/papers.jpg" 
-    },
-
-    {
-    "id": "carpeta4",
-    "categoria": "carpetas",
-    "titulo": "Apostillado Urgente",
-    "descripcion": "Apostille de la Haya en 7 días.",
-    "precio": 80000,
-    "imagen": "resources/papers.jpg" 
-    },
-
-    {
-    "id": "inscripcion1",
-    "categoria": "inscripcion",
-    "titulo": "Fast It",
-    "descripcion": "Sitio Oficial del Consulado.",
-    "precio": 45000,    
-    "imagen": "resources/papers.jpg"
-    },
-
-    {
-    "id": "inscripcion2",
-    "categoria": "inscripcion",
-    "titulo": "Prenotami",
-    "descripcion": "Para solicitud de pasaportes.",
-    "precio": 25000,
-    "imagen": "resources/papers.jpg"
-    },
-
-    {
-    "id": "traduccion1",
-    "categoria": "traduccion",
-    "titulo": "Traducción Italiana de actas",
-    "descripcion": "Traducción certificada de actas de nacimiento, matrimonio y defunción.",
-    "precio": 45000,
-    "imagen": "resources/papers.jpg"
-    },
-
-    {
-    "id": "traduccion2",
-    "categoria": "traduccion",
-    "titulo": "Traducción Italiana de Sentencias",
-    "descripcion": "Traducción certificada de sentencias de divorcio o adopción.",
-    "precio": "Consultar",
-    "imagen": "resources/papers.jpg"
+    if (!categoriaActual) {
+        console.log("No se definió una categoría para esta página.");
+        return;
     }
 
-]
+    const servicesContainer = document.getElementById("services-container");
+    if (!servicesContainer) {
+        console.error("No se encontró el contenedor con id 'services-container'");
+        return;
+    }
 
-const categoriaActual = "carpetas";
+    fetch('/servicios.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(servicios => {
+            const serviciosFiltrados = servicios.filter(servicio => servicio.categoria === categoriaActual);
+            renderServices(serviciosFiltrados, servicesContainer);
+        })
+        .catch(error => {
+            console.error("Error al cargar los servicios:", error);
+            servicesContainer.innerHTML = `<div class="alert alert-danger">No se pudieron cargar los servicios. Inténtalo de nuevo más tarde.</div>`;
+        });
+});
 
-fetch("servicios.json")
-    .then(response => response.json())
-    .then(servicios => {
-        const container = document.createElement("div");
-        container.className = "d-flex flex-wrap justify-content-center gap-3 mt-5";
+function renderServices(servicios, container) {
+    container.innerHTML = "";
 
-        servicios
-            .filter(servicio => servicio.categoria === categoriaActual)
-            .forEach(servicio => {
-                const card = document.createElement("div");
-                card.className = "card service-card";
+    if (servicios.length === 0) {
+        container.innerHTML = `<div class="alert alert-info">No hay servicios disponibles en esta categoría.</div>`;
+        return;
+    }
 
-                const precioVisible =
-                    typeof servicio.precio === "number"
-                        ? `ARS ${servicio.precio.toLocaleString()}`
-                        : servicio.precio;
+    servicios.forEach(servicio => {
+        const card = document.createElement("div");
+        card.className = "card service-card";
+        card.style.width = "18rem";
 
-                const precioPasable =
-                    typeof servicio.precio === "number" ? servicio.precio : 0;
+        const precioVisible = typeof servicio.precio === "number" ? `ARS ${servicio.precio.toLocaleString()}` : servicio.precio;
 
-                card.innerHTML = `
-                    <img src="${servicio.imagen}" class="card-img-top" alt="${servicio.titulo}">
-                    <div class="card-body">
-                        <h5 class="card-title">${servicio.titulo}</h5>
-                        <p class="card-text">${servicio.descripcion}</p>
-                        <p class="price">${precioVisible}</p>
-                        <div class="quantity-controls mb-2">
-                            <button class="btn btn-sm btn-outline-secondary" onclick="adjustQty(this, -1)">−</button>
-                            <span class="quantity">0</span>
-                            <button class="btn btn-sm btn-outline-secondary" onclick="adjustQty(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary w-100" onclick="addToCart('${servicio.id}', '${servicio.titulo}', ${precioPasable})">
-                            Agregar al carrito
-                        </button>
-                    </div>
-                `;
-
-                container.appendChild(card);
-            });
-
-        document.body.appendChild(container);
+        card.innerHTML = `
+            <img src="${servicio.imagen}" class="card-img-top" alt="${servicio.titulo}">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">${servicio.titulo}</h5>
+                <p class="card-text">${servicio.descripcion}</p>
+                <p class="price mt-auto">${precioVisible}</p>
+                <div class="quantity-controls mb-2">
+                    <button class="btn btn-sm btn-outline-secondary btn-qty" data-delta="-1">−</button>
+                    <span class="quantity mx-2">1</span>
+                    <button class="btn btn-sm btn-outline-secondary btn-qty" data-delta="1">+</button>
+                </div>
+                <button class="btn btn-primary w-100 btn-add-to-cart" 
+                        data-id="${servicio.id}" 
+                        data-titulo="${servicio.titulo}" 
+                        data-precio="${typeof servicio.precio === 'number' ? servicio.precio : 0}">
+                    Agregar al carrito
+                </button>
+            </div>
+        `;
+        container.appendChild(card);
     });
+}
 
+document.addEventListener('click', function(event) {
+    if (event.target.matches('.btn-qty')) {
+        adjustQty(event.target);
+    }
+    if (event.target.matches('.btn-add-to-cart')) {
+        addToCart(event.target);
+    }
+});
 
-function adjustQty(button, delta) {
-    const container = button.closest(".quantity-controls");
-    const quantityEl = container.querySelector(".quantity");
+function adjustQty(button) {
+    const controls = button.closest(".quantity-controls");
+    const quantityEl = controls.querySelector(".quantity");
     let quantity = parseInt(quantityEl.textContent);
+    const delta = parseInt(button.dataset.delta);
 
     quantity += delta;
-    if (quantity < 0) quantity = 0;
+    if (quantity < 1) quantity = 1;
 
     quantityEl.textContent = quantity;
+}
+
+function addToCart(button) {
+    const cardBody = button.closest('.card-body');
+    const quantityEl = cardBody.querySelector('.quantity');
+    const quantity = parseInt(quantityEl.textContent);
+
+    const servicio = {
+        id: button.dataset.id,
+        titulo: button.dataset.titulo,
+        precio: parseFloat(button.dataset.precio),
+        cantidad: quantity
+    };
+
+    if (servicio.precio === 0) {
+        alert("Para servicios a consultar, por favor contáctanos directamente.");
+        return;
+    }
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existingProductIndex = cart.findIndex(item => item.id === servicio.id);
+    if (existingProductIndex > -1) {
+        cart[existingProductIndex].cantidad += servicio.cantidad;
+    } else {
+        cart.push(servicio);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    button.textContent = '¡Agregado!';
+    button.classList.add('btn-success');
+    setTimeout(() => {
+        button.textContent = 'Agregar al carrito';
+        button.classList.remove('btn-success');
+        quantityEl.textContent = '1';
+    }, 1500);
 }

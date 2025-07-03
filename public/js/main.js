@@ -165,18 +165,24 @@ function addToCart(servicioId, titulo, precio, cantidad = 1) {
     updateCartCounter();
 }
 
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+const contactForm = document.getElementById('contactForm');
 
-    if (this.checkValidity()) {
-        this.style.display = 'none';
-        document.getElementById('thankYouMessage').style.display = 'block';
-    
-        setTimeout(() => {
-            this.style.display = 'block';
-            document.getElementById('thankYouMessage').style.display = 'none';
-        }, 5000);
-    }
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-    this.classList.add('was-validated');
-});
+        if (this.checkValidity()) {
+            this.style.display = 'none';
+            document.getElementById('thankYouMessage').style.display = 'block';
+
+            setTimeout(() => {
+                this.style.display = 'block';
+                document.getElementById('thankYouMessage').style.display = 'none';
+                this.classList.remove('was-validated'); // Limpiar validación para futuro uso
+                this.reset(); // Limpiar los campos del formulario
+            }, 5000);
+        }
+
+        this.classList.add('was-validated');
+    });
+}

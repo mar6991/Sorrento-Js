@@ -16,11 +16,14 @@ function renderCart() {
         
         const titulo = item.titulo || "Servicio desconocido";
 
-        const precio = typeof item.precio === 'number' ? `ARS ${item.precio.toLocaleString('es-AR')}` 
+        const precio = typeof item.precio === 'number' 
+        ? `ARS ${item.precio.toLocaleString('es-AR')}` 
             : item.precio || "Consultar";
-        const cantidad = item.cantidad || 0;
+        
+            const cantidad = item.cantidad || 0;
+        
         const precioNum = typeof item.precio === 'number' ? item.precio : 0;
-        const subtotal = precioNum * cantidadNum;
+        const subtotal = precioNum * cantidad;
 
         return `
                 <tr>

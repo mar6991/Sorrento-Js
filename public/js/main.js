@@ -167,7 +167,7 @@ function addToCart(servicioId, titulo, precio, cantidad = 1) {
 
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
-  
+
     if (this.checkValidity()) {
         this.style.display = 'none';
         document.getElementById('successMessage').style.display = 'block';

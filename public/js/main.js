@@ -1,4 +1,4 @@
-// main.js corregido y optimizado
+
 (() => {
     'use strict';
 
@@ -81,6 +81,21 @@ function logout() {
     window.location.href = "/logIn.html";
 }
 
+//redirigir despues de contacto
+
+document.getElementById("contact-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    if (this.checkValidity()) {
+
+        setTimeout(() => {
+        alert("Gracias por contactarnos.");
+        window.location.href = "/index.html";
+    }, 2000);
+}
+    this.classList.add("was-validated");
+}); 
+
 // Navegación
 const navPages = [
     { title: "Inicio", href: "/index.html" },
@@ -146,23 +161,18 @@ function createNavbar() {
 document.addEventListener("DOMContentLoaded", createNavbar);
 
 // Función para agregar al carrito
-function addToCart(servicioId, titulo, precio) {
+function addToCart(servicioId, titulo, precio, cantidad = 1) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    const cleanTitulo = titulo.startsWith('${') ? "Servicio desconocido" : titulo;
-    const cleanPrecio = typeof precio === 'string' && precio.startsWith('${') 
-        ? "Consultar" 
-        : precio;
 
     const existingItem = cart.find(item => item.id === servicioId);
 
     if (existingItem) {
-        existingItem.cantidad += 1;
+        existingItem.cantidad += cantidad;
     } else {
         cart.push({ id: servicioId,
             titulo: cleanTitulo,
             precio: cleanPrecio,
-            cantidad: 1 });
+            cantidad: cantidad });
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));

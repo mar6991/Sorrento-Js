@@ -165,6 +165,15 @@ function addToCart(servicioId, titulo, precio, cantidad = 1) {
     updateCartCounter();
 }
 
+function updateCartCounter(){
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartCounter = document.getElementById("cartCounter");
+    if (cartCounter) cartCounter.textContent = cart.length;
+}
+
+const contactForm = document.getElementById('contactForm');
+
+if(contactForm){
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -180,4 +189,4 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     }
 
     this.classList.add('was-validated');
-});
+});}

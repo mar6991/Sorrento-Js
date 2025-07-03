@@ -42,7 +42,7 @@
     "categoria": "inscripcion",
     "titulo": "Fast It",
     "descripcion": "Sitio Oficial del Consulado.",
-    "precio": 45000,
+    "precio": 45000,    
     "imagen": "resources/papers.jpg"
     },
 
@@ -100,17 +100,29 @@ fetch("servicios.json")
     .forEach(servicio => {
         const card = document.createElement("div");
         card.className = "card service-card";
+
+        const precioVisible =
+                    typeof servicio.precio === "number"
+                        ? `ARS ${servicio.precio.toLocaleString()}`
+                        : servicio.precio;
+
+                const precioPasable =
+                    typeof servicio.precio === "number" ? servicio.precio : 0;
+
         card.innerHTML = `
         <img src="${servicio.imagen}" class="card-img-top" alt="${servicio.titulo}">
         <div class="card-body">
             <h5 class="card-title">${servicio.titulo}</h5>
             <p class="card-text">${servicio.descripcion}</p>
-            <p class="price">${typeof servicio.precio === "number" ? "ARS " + servicio.precio.toLocaleString() : servicio.precio}</p>
+            <p class="price">${precioVisible}</p>
             <div class="quantity-controls">
                 <button class="btn btn-sm btn-outline-secondary" onclick="adjustQty(this, -1)">−</button>
                 <span class="quantity">0</span>
                 <button class="btn btn-sm btn-outline-secondary" onclick="adjustQty(this, 1)">+</button>
             </div>
+            <button class="btn btn-primary w-100" onclick="addToCart('${servicio.id}', '${servicio.titulo}', ${precioPasable})">
+                Agregar al carrito
+            </button>
         </div>
         `;
         container.appendChild(card);

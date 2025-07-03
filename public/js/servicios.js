@@ -24,7 +24,7 @@
     "categoria": "carpetas",
     "titulo": "Apostillado",
     "descripcion": "Apostille de la Haya",
-    "precio": "50000",
+    "precio": 50000,
     "imagen": "resources/papers.jpg" 
     },
 
@@ -33,7 +33,7 @@
     "categoria": "carpetas",
     "titulo": "Apostillado Urgente",
     "descripcion": "Apostille de la Haya en 7 días.",
-    "precio": "80000",
+    "precio": 80000,
     "imagen": "resources/papers.jpg" 
     },
 

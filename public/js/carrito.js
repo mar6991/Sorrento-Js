@@ -24,15 +24,16 @@ function renderCart() {
                 </thead>`;
             
             const rows = cart.map((item, index) => {
-                let precio = isNaN(item.precio) ? 0 : parseFloat(item.precio);
-                let subtotal = isNaN(item.precio) ? 0 : precio * item.cantidad;
+                const titulo = item.titulo || "Servicio sin nombre";
+                const precio = typeof item.precio === "number" ? item.precio : 0;
+                const subtotal = precio * item.cantidad;
                 total += subtotal;
                 return `
                     <tr>
-                        <td>${item.titulo}</td>
-                        <td>${isNaN(precio) ? item.precio : "ARS " + precio.toLocaleString()}</td>
+                        <td>${titulo}</td>
+                        <td>${typeof item.precio === "number" ? "ARS " + precio.toLocaleString() : item.precio}</td>
                         <td>${item.cantidad}</td>
-                        <td>${isNaN(precio) ? "-" : "ARS " + subtotal.toLocaleString()}</td>
+                        <td>${subtotal > 0 ? "ARS " + subtotal.toLocaleString() : "-"}</td>
                         <td>
                             <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})"><i class="bi bi-trash"></i></button>
                         </td>

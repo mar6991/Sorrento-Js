@@ -1,6 +1,11 @@
 function renderCart() {
     const cartContainer = document.getElementById("cart-container");
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const total = cart.reduce((sum, item) => {
+        const precioNum = typeof item.precio === 'number' ? item.precio : 0;
+        const cantidadNum = Number(item.cantidad) || 0;
+        return sum + (precioNum * cantidadNum);
+    }, 0);
 
     if (cart.length === 0) {
         cartContainer.innerHTML = "<div class='alert alert-info'>Tu carrito está vacío</div>";

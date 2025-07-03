@@ -173,6 +173,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         document.getElementById('thankYouMessage').style.display = 'block';
     
         setTimeout(() => {
+            this.reset();
             this.style.display = 'block';
             document.getElementById('thankYouMessage').style.display = 'none';
         }, 5000);

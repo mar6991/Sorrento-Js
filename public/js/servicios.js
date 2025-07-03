@@ -75,6 +75,52 @@
 
 ]
 
+const categoriaActual = "carpetas";
+
+fetch("servicios.json")
+    .then(response => response.json())
+    .then(servicios => {
+        const container = document.createElement("div");
+        container.className = "d-flex flex-wrap justify-content-center gap-3 mt-5";
+
+        servicios
+            .filter(servicio => servicio.categoria === categoriaActual)
+            .forEach(servicio => {
+                const card = document.createElement("div");
+                card.className = "card service-card";
+
+                const precioVisible =
+                    typeof servicio.precio === "number"
+                        ? `ARS ${servicio.precio.toLocaleString()}`
+                        : servicio.precio;
+
+                const precioPasable =
+                    typeof servicio.precio === "number" ? servicio.precio : 0;
+
+                card.innerHTML = `
+                    <img src="${servicio.imagen}" class="card-img-top" alt="${servicio.titulo}">
+                    <div class="card-body">
+                        <h5 class="card-title">${servicio.titulo}</h5>
+                        <p class="card-text">${servicio.descripcion}</p>
+                        <p class="price">${precioVisible}</p>
+                        <div class="quantity-controls mb-2">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="adjustQty(this, -1)">−</button>
+                            <span class="quantity">0</span>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="adjustQty(this, 1)">+</button>
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="addToCart('${servicio.id}', '${servicio.titulo}', ${precioPasable})">
+                            Agregar al carrito
+                        </button>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+
+        document.body.appendChild(container);
+    });
+
+
 function adjustQty(button, delta) {
     const container = button.closest(".quantity-controls");
     const quantityEl = container.querySelector(".quantity");
@@ -85,48 +131,3 @@ function adjustQty(button, delta) {
 
     quantityEl.textContent = quantity;
 }
-
-
-const categoriaActual = "carpetas";
-
-fetch("servicios.json")
-    .then(response => response.json())
-    .then(servicios => {
-    const container = document.createElement("div");
-    container.className = "d-flex flex-wrap justify-content-center gap-3 mt-5";
-
-    servicios
-    .filter(servicio => servicio.categoria === categoriaActual)
-    .forEach(servicio => {
-        const card = document.createElement("div");
-        card.className = "card service-card";
-
-        const precioVisible =
-                    typeof servicio.precio === "number"
-                        ? `ARS ${servicio.precio.toLocaleString()}`
-                        : servicio.precio;
-
-                const precioPasable =
-                    typeof servicio.precio === "number" ? servicio.precio : 0;
-
-        card.innerHTML = `
-        <img src="${servicio.imagen}" class="card-img-top" alt="${servicio.titulo}">
-        <div class="card-body">
-            <h5 class="card-title">${servicio.titulo}</h5>
-            <p class="card-text">${servicio.descripcion}</p>
-            <p class="price">${precioVisible}</p>
-            <div class="quantity-controls">
-                <button class="btn btn-sm btn-outline-secondary" onclick="adjustQty(this, -1)">−</button>
-                <span class="quantity">0</span>
-                <button class="btn btn-sm btn-outline-secondary" onclick="adjustQty(this, 1)">+</button>
-            </div>
-            <button class="btn btn-primary w-100" onclick="addToCart('${servicio.id}', '${servicio.titulo}', ${precioPasable})">
-                Agregar al carrito
-            </button>
-        </div>
-        `;
-        container.appendChild(card);
-        });
-
-    document.body.appendChild(container);
-});

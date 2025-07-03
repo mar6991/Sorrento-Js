@@ -81,6 +81,7 @@ function logout() {
     window.location.href = "/logIn.html";
 }
 
+
 // Navegación
 const navPages = [
     { title: "Inicio", href: "/index.html" },
@@ -164,17 +165,15 @@ function addToCart(servicioId, titulo, precio, cantidad = 1) {
     updateCartCounter();
 }
 
-//redirigir despues de contacto
-
-document.getElementById("contact-form").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    if (this.checkValidity()) {
-        
-        setTimeout(() => {
-        alert("Gracias por contactarnos.");
-        window.location.href = "/index.html";
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  if (this.checkValidity()) {
+  
+    setTimeout(() => {
+      window.location.href = '/index.html';
     }, 2000);
-}
-    this.classList.add("was-validated");
-}); 
+  }
+  
+  this.classList.add('was-validated');
+});

@@ -10,17 +10,18 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <div class="container py-5">
-        <h2 class="mb-4">🛒 Carrito de Servicios</h2>
-        <div id="cart-container" class="table-responsive"></div>
-        <div class="d-flex justify-content-between mt-4">
-            <button class="btn btn-outline-dark rounded-0 px-3 py-2 btn-lg mt-3" onclick="vaciarCarrito()">Vaciar Carrito</button>
-            <button class="btn btn-dark rounded-0 px-3 py-2 mt-3" type="button" id="subscribe" onclick="confirmarCompra()">Confirmar compra</button>
-        </div>
-    </div>
+<div class="container py-5">
+    <h2 class="mb-4">🛒 Carrito de Servicios</h2>
+    <div id="cart-container" class="table-responsive"></div>
 
-    <script src="/js/main.js"></script>
-    <script src="/js/servicios.js"></script>
-    <script src="/js/carrito.js"></script>
+    <div class="d-flex justify-content-between mt-4">
+        <button id="vaciar-carrito-btn" class="btn btn-outline-dark rounded-0 px-3 py-2 btn-lg mt-3">Vaciar Carrito</button>
+        <button id="confirmar-compra-btn" class="btn btn-dark rounded-0 px-3 py-2 mt-3" type="button">Confirmar compra</button>
+    </div>
+</div>
+
+<script src="/js/main.js" defer></script>
+<script src="/js/servicios.js" defer></script>
+<script src="/js/carrito.js" defer></script>
 </body>
 </html>

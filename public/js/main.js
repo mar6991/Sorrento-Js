@@ -81,21 +81,6 @@ function logout() {
     window.location.href = "/logIn.html";
 }
 
-//redirigir despues de contacto
-
-document.getElementById("contact-form").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    if (this.checkValidity()) {
-        
-        setTimeout(() => {
-        alert("Gracias por contactarnos.");
-        window.location.href = "/index.html";
-    }, 2000);
-}
-    this.classList.add("was-validated");
-}); 
-
 // Navegación
 const navPages = [
     { title: "Inicio", href: "/index.html" },
@@ -178,3 +163,18 @@ function addToCart(servicioId, titulo, precio, cantidad = 1) {
     localStorage.setItem("cart", JSON.stringify(cart));
     updateCartCounter();
 }
+
+//redirigir despues de contacto
+
+document.getElementById("contact-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    if (this.checkValidity()) {
+        
+        setTimeout(() => {
+        alert("Gracias por contactarnos.");
+        window.location.href = "/index.html";
+    }, 2000);
+}
+    this.classList.add("was-validated");
+}); 

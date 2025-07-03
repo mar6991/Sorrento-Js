@@ -1,60 +1,69 @@
 function renderCart() {
-            const cartContainer = document.getElementById("cart-container");
-            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartContainer = document.getElementById("cart-container");
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-            if (cart.length === 0) {
-                cartContainer.innerHTML = "<p class='text-muted'>Tu carrito está vacío.</p>";
-                return;
-            }
+    if (cart.length === 0) {
+        cartContainer.innerHTML = "<div class='alert alert-info'>Tu carrito está vacío</div>";
+        return;
+    }
 
-            let total = 0;
+    let total = 0;
+    const table = document.createElement("table");
+    table.className = "table table-bordered table-hover";
 
-            const table = document.createElement("table");
-            table.className = "table table-bordered table-hover";
+    // Safely build rows
+    const rows = cart.map((item, index) => {
+        try {
+            // Ensure all required fields exist
+            const titulo = item.titulo || "Servicio desconocido";
+            const precio = typeof item.precio === "number" ? item.precio : 
+                        (item.precio === "Consultar" ? 0 : parseFloat(item.precio) || 0);
+            const cantidad = item.cantidad || 0;
+            const subtotal = precio * cantidad;
+            total += subtotal;
 
-            const thead = `
-                <thead>
-                    <tr>
-                        <th>Servicio</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>Subtotal</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>`;
-            
-            const rows = cart.map((item, index) => {
-                const titulo = item.titulo || "Servicio sin nombre";
-                const precio = typeof item.precio === "number" ? item.precio : (item.precio === "Consultar" ? 0 : parseFloat(item.precio) || 0);
-                const cantidad = item.cantidad || 0;
-                const subtotal = precio * cantidad;
-                total += subtotal;
-                return `
-                    <tr>
-                        <td>${titulo}</td>
-                        <td>${typeof item.precio === "number" ? "ARS " + item.precio.toLocaleString() : item.precio}</td>
-                        <td>${cantidad}</td>
-                        <td>${subtotal > 0 ? "ARS " + subtotal.toLocaleString() : "-"}</td>
-                        <td>
-                            <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                `;  
-            }).join("");
-
-            const tfoot = `
-                <tfoot>
-                    <tr>
-                        <th colspan="3" class="text-end">Total</th>
-                        <th>${total > 0 ? "ARS " + total.toLocaleString() : "-"}</th>
-                        <th></th>
-                    </tr>
-                </tfoot>`;
-
-            table.innerHTML = thead + "<tbody>" + rows + "</tbody>" + tfoot;
-            cartContainer.innerHTML = "";
-            cartContainer.appendChild(table);
+            return `
+                <tr>
+                    <td>${titulo}</td>
+                    <td>${typeof item.precio === "number" ? "ARS " + item.precio.toLocaleString() : item.precio}</td>
+                    <td>${cantidad}</td>
+                    <td>${precio ? "ARS " + subtotal.toLocaleString() : "-"}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        } catch (error) {
+            console.error("Error rendering cart item:", item, error);
+            return "";
         }
+    }).join("");
+
+    table.innerHTML = `
+        <thead>
+            <tr>
+                <th>Servicio</th>
+                <th>Precio Unitario</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+        <tfoot>
+            <tr>
+                <th colspan="3">Total</th>
+                <th>ARS ${total.toLocaleString()}</th>
+                <th></th>
+            </tr>
+        </tfoot>
+    `;
+
+    cartContainer.innerHTML = "";
+    cartContainer.appendChild(table);
+}
 
         function removeFromCart(index) {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];

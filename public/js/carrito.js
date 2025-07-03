@@ -25,20 +25,21 @@ function renderCart() {
             
             const rows = cart.map((item, index) => {
                 const titulo = item.titulo || "Servicio sin nombre";
-                const precio = typeof item.precio === "number" ? item.precio : 0;
-                const subtotal = precio * item.cantidad;
+                const precio = typeof item.precio === "number" ? item.precio : (item.precio === "Consultar" ? 0 : parseFloat(item.precio) || 0);
+                const cantidad = item.cantidad || 0;
+                const subtotal = precio * cantidad;
                 total += subtotal;
                 return `
                     <tr>
                         <td>${titulo}</td>
-                        <td>${typeof item.precio === "number" ? "ARS " + precio.toLocaleString() : item.precio}</td>
-                        <td>${item.cantidad}</td>
+                        <td>${typeof item.precio === "number" ? "ARS " + item.precio.toLocaleString() : item.precio}</td>
+                        <td>${cantidad}</td>
                         <td>${subtotal > 0 ? "ARS " + subtotal.toLocaleString() : "-"}</td>
                         <td>
                             <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
-                `;
+                `;  
             }).join("");
 
             const tfoot = `

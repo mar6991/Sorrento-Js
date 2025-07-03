@@ -12,20 +12,19 @@ function renderCart() {
         return;
     }
 
-    let total = 0;
     const table = document.createElement("table");
     table.className = "table table-bordered table-hover";
 
     const rows = cart.map((item, index) => {
-        // Clean template literals if they exist
-        const titulo = item.titulo.startsWith('${') ? "Servicio desconocido" : item.titulo;
-        const precio = typeof item.precio === 'string' && item.precio.startsWith('${') 
-            ? "Consultar" 
+        
+        const titulo = item.titulo && !item.titulo.startsWith('${') ? item.titulo : "Servicio desconocido";
+        const precio = typeof item.precio === 'string' && item.precio.startsWith('${')
+            ? "Consultar"
             : item.precio;
         
         const precioNum = typeof precio === 'number' ? precio : 0;
-        const subtotal = precioNum * item.cantidad;
-        total += subtotal;
+        const cantidadNum = Number(item.cantidad) || 0;
+        const subtotal = precioNum * cantidadNum;
 
         return `
                 <tr>

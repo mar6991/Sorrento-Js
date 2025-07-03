@@ -89,7 +89,6 @@ const navPages = [
     { title: "Inscripciones", href: "/inscripcion.html" },
     { title: "Traducciones", href: "/traducciones.html" },
     { title: "Contacto", href: "/contact.html" },
-    { title: "Carrito", href: "/carrito.html" }
 ];
 
 function createNavbar() {

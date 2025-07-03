@@ -1,11 +1,8 @@
 function renderCart() {
     const cartContainer = document.getElementById("cart-container");
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const total = cart.reduce((sum, item) => {
-        const precioNum = typeof item.precio === 'number' ? item.precio : 0;
-        const cantidadNum = Number(item.cantidad) || 0;
-        return sum + (precioNum * cantidadNum);
-    }, 0);
+
+    if(!cartContainer) return
 
     if (cart.length === 0) {
         cartContainer.innerHTML = "<div class='alert alert-info'>Tu carrito está vacío</div>";
@@ -17,20 +14,19 @@ function renderCart() {
 
     const rows = cart.map((item, index) => {
         
-        const titulo = item.titulo && !item.titulo.startsWith('${') ? item.titulo : "Servicio desconocido";
-        const precio = typeof item.precio === 'string' && item.precio.startsWith('${')
-            ? "Consultar"
-            : item.precio;
-        
-        const precioNum = typeof precio === 'number' ? precio : 0;
-        const cantidadNum = Number(item.cantidad) || 0;
+        const titulo = item.titulo || "Servicio desconocido";
+
+        const precio = typeof item.precio === 'number' ? `ARS ${item.precio.toLocaleString('es-AR')}` 
+            : item.precio || "Consultar";
+        const cantidad = item.cantidad || 0;
+        const precioNum = typeof item.precio === 'number' ? item.precio : 0;
         const subtotal = precioNum * cantidadNum;
 
         return `
                 <tr>
                     <td>${titulo}</td>
-                    <td>${typeof item.precio === "number" ? "ARS " + item.precio.toLocaleString() : item.precio}</td>
-                    <td>${item.cantidad}</td>
+                    <td>${precio}</td>
+                    <td>${cantidad}</td>
                     <td>${precio ? "ARS " + subtotal.toLocaleString() : "-"}</td>
                     <td>
                         <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">
@@ -41,6 +37,11 @@ function renderCart() {
             `;
         
     }).join("");
+
+    const total = cart.reduce((sum, item) => {
+        const precioNum = typeof item.precio === 'number' ? item.precio : 0;
+        return sum + (precioNum * item.cantidad || 0);
+    }, 0);
 
     table.innerHTML = `
         <thead>

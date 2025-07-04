@@ -1,0 +1,66 @@
+[
+  {
+    "id": "carpeta1",
+    "categoria": "carpetas",
+    "titulo": "Armado de árbol genealógico",
+    "descripcion": "Búsqueda desde la persona interesada hasta el italiano.",
+    "precio": 45000,
+    "imagen": "img/papers.jpg"
+  },
+  {
+    "id": "carpeta2",
+    "categoria": "carpetas",
+    "titulo": "Pedido de actas",
+    "descripcion": "Solicitud de las actas de nacimiento, matrimonio y defunción legalizadas.",
+    "precio": "Consultar",
+    "imagen": "img/papers.jpg"
+  },
+  {
+    "id": "carpeta3",
+    "categoria": "carpetas",
+    "titulo": "Apostillado",
+    "descripcion": "Apostille de la Haya",
+    "precio": 50000,
+    "imagen": "img/papers.jpg"
+  },
+  {
+    "id": "carpeta4",
+    "categoria": "carpetas",
+    "titulo": "Apostillado Urgente",
+    "descripcion": "Apostille de la Haya en 7 días.",
+    "precio": 80000,
+    "imagen": "img/papers.jpg"
+  },
+  {
+    "id": "inscripcion1",
+    "categoria": "inscripcion",
+    "titulo": "Fast It",
+    "descripcion": "Sitio Oficial del Consulado.",
+    "precio": 45000,
+    "imagen": "img/papers.jpg"
+  },
+  {
+    "id": "inscripcion2",
+    "categoria": "inscripcion",
+    "titulo": "Prenotami",
+    "descripcion": "Para solicitud de pasaportes.",
+    "precio": 25000,
+    "imagen": "img/papers.jpg"
+  },
+  {
+    "id": "traduccion1",
+    "categoria": "traduccion",
+    "titulo": "Traducción Italiana de actas",
+    "descripcion": "Traducción certificada de actas de nacimiento, matrimonio y defunción.",
+    "precio": 45000,
+    "imagen": "img/papers.jpg"
+  },
+  {
+    "id": "traduccion2",
+    "categoria": "traduccion",
+    "titulo": "Traducción Italiana de Sentencias",
+    "descripcion": "Traducción certificada de sentencias de divorcio o adopción.",
+    "precio": "Consultar",
+    "imagen": "img/papers.jpg"
+  }
+]

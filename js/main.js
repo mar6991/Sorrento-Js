@@ -89,6 +89,7 @@ const navPages = [
     { title: "Inscripciones", href: "/inscripcion.html" },
     { title: "Traducciones", href: "/traducciones.html" },
     { title: "Contacto", href: "/contact.html" },
+    { title: "Carrito", href: "/carrito.html" }
 ];
 
 function createNavbar() {
@@ -109,14 +110,6 @@ function createNavbar() {
     document.body.prepend(navbar);
 
     const ul = document.getElementById("navbar-links");
-
-    const cartLi = document.createElement("li");
-    cartLi.className = "nav-item";
-    cartLi.innerHTML = `
-        <a class="nav-link" href="/carrito.html">
-            <i class="bi bi-cart"></i> Carrito
-        </a>`;
-    ul.appendChild(cartLi);
 
     navPages.forEach(page => {
         const li = document.createElement("li");
@@ -163,8 +156,8 @@ function addToCart(servicioId, titulo, precio, cantidad = 1) {
         existingItem.cantidad += cantidad;
     } else {
         cart.push({ id: servicioId,
-            titulo: titulo,
-            precio: precio,
+            titulo: cleanTitulo,
+            precio: cleanPrecio,
             cantidad: cantidad });
     }
 
@@ -172,33 +165,24 @@ function addToCart(servicioId, titulo, precio, cantidad = 1) {
     updateCartCounter();
 }
 
-function updateCartCounter(){
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const cartCounter = document.getElementById("cartCounter");
-    if (cartCounter) {
-        cartCounter.textContent = cart.reduce((total, item) => total + (item.cantidad || 0), 0);
-    }
-}
-
-
-//validar form 
-
 const contactForm = document.getElementById('contactForm');
 
-if(contactForm){
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-    if (this.checkValidity()) {
-        this.style.display = 'none';
-        document.getElementById('thankYouMessage').style.display = 'block';
-    
-        setTimeout(() => {
-            this.reset();
-            this.style.display = 'block';
-            document.getElementById('thankYouMessage').style.display = 'none';
-        }, 5000);
-    }
+        if (this.checkValidity()) {
+            this.style.display = 'none';
+            document.getElementById('thankYouMessage').style.display = 'block';
 
-    this.classList.add('was-validated');
-});}
+            setTimeout(() => {
+                this.style.display = 'block';
+                document.getElementById('thankYouMessage').style.display = 'none';
+                this.classList.remove('was-validated'); // Limpiar validación para futuro uso
+                this.reset(); // Limpiar los campos del formulario
+            }, 5000);
+        }
+
+        this.classList.add('was-validated');
+    });
+}

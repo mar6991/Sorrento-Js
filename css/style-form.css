@@ -70,7 +70,7 @@ form button {
     border-radius: 25px;
     font-weight: bold;
     cursor: pointer;
-    transition: #678c2e 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 form button:hover {
@@ -92,7 +92,7 @@ form button:hover {
 @media screen and (max-width: 768px) {
     .navbar-brand {
     margin-right: 0;
-    padding: 0 1.5rem;s
+    padding: 0 1.5rem;
 }
 }
 

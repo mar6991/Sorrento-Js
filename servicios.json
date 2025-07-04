@@ -33,7 +33,7 @@
   },
   {
     "id": "inscripcion1",
-    "categoria": "inscripcion",
+    "categoria": "inscripciones",
     "titulo": "Fast It",
     "descripcion": "Sitio Oficial del Consulado.",
     "precio": 45000,
@@ -41,7 +41,7 @@
   },
   {
     "id": "inscripcion2",
-    "categoria": "inscripcion",
+    "categoria": "inscripciones",
     "titulo": "Prenotami",
     "descripcion": "Para solicitud de pasaportes.",
     "precio": 25000,
@@ -49,7 +49,7 @@
   },
   {
     "id": "traduccion1",
-    "categoria": "traduccion",
+    "categoria": "traducciones",
     "titulo": "Traducción Italiana de actas",
     "descripcion": "Traducción certificada de actas de nacimiento, matrimonio y defunción.",
     "precio": 45000,
@@ -57,7 +57,7 @@
   },
   {
     "id": "traduccion2",
-    "categoria": "traduccion",
+    "categoria": "traducciones",
     "titulo": "Traducción Italiana de Sentencias",
     "descripcion": "Traducción certificada de sentencias de divorcio o adopción.",
     "precio": "Consultar",
